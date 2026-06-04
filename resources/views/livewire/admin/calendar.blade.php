@@ -47,66 +47,77 @@
 
     @push('scripts')
     <script>
-    document.addEventListener('livewire:init', function () {
+    function initCalendar() {
         const el = document.getElementById('calendar');
         if (!el) return;
 
-        function initCalendar() {
-            const events = JSON.parse(el.dataset.events || '[]');
-            const view = el.dataset.view || 'dayGridMonth';
+        const events = JSON.parse(el.dataset.events || '[]');
+        const view = el.dataset.view || 'dayGridMonth';
 
-            if (window.calendarInstance) {
-                window.calendarInstance.destroy();
-            }
-
-            const calendar = new FullCalendar.Calendar(el, {
-                initialView: view,
-                locale: 'es',
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: ''
-                },
-                events: events,
-                eventClick: function (info) {
-                    const props = info.event.extendedProps;
-                    alert(
-                        'Cliente: ' + props.customer + '\n' +
-                        'Barbero: ' + props.barber + '\n' +
-                        'Servicio: ' + props.service + '\n' +
-                        'Estado: ' + props.status + '\n' +
-                        'Precio: $' + (props.price || 0)
-                    );
-                },
-                eventDrop: function (info) {
-                    @this.updateEvent(
-                        parseInt(info.event.id),
-                        info.event.start.toISOString(),
-                        info.event.end ? info.event.end.toISOString() : null
-                    );
-                },
-                eventResize: function (info) {
-                    @this.updateEvent(
-                        parseInt(info.event.id),
-                        info.event.start.toISOString(),
-                        info.event.end ? info.event.end.toISOString() : null
-                    );
-                },
-                editable: true,
-                selectable: true,
-                height: 'auto',
-                slotMinTime: '08:00:00',
-                slotMaxTime: '20:00:00',
-            });
-
-            calendar.render();
-            window.calendarInstance = calendar;
+        if (window.calendarInstance) {
+            window.calendarInstance.destroy();
         }
 
-        initCalendar();
+        const calendar = new FullCalendar.Calendar(el, {
+            initialView: view,
+            locale: 'es',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: ''
+            },
+            events: events,
+            eventClick: function (info) {
+                const props = info.event.extendedProps;
+                alert(
+                    'Cliente: ' + props.customer + '\n' +
+                    'Barbero: ' + props.barber + '\n' +
+                    'Servicio: ' + props.service + '\n' +
+                    'Estado: ' + props.status + '\n' +
+                    'Precio: $' + (props.price || 0)
+                );
+            },
+            eventDrop: function (info) {
+                @this.updateEvent(
+                    parseInt(info.event.id),
+                    info.event.start.toISOString(),
+                    info.event.end ? info.event.end.toISOString() : null
+                );
+            },
+            eventResize: function (info) {
+                @this.updateEvent(
+                    parseInt(info.event.id),
+                    info.event.start.toISOString(),
+                    info.event.end ? info.event.end.toISOString() : null
+                );
+            },
+            editable: true,
+            selectable: true,
+            height: 'auto',
+            slotMinTime: '08:00:00',
+            slotMaxTime: '20:00:00',
+        });
 
-        Livewire.on('filter-changed', () => {
-            setTimeout(initCalendar, 100);
+        calendar.render();
+        window.calendarInstance = calendar;
+    }
+
+    document.addEventListener('livewire:init', function () {
+        if (window.FullCalendar) {
+            initCalendar();
+        } else {
+            const check = setInterval(function () {
+                if (window.FullCalendar) {
+                    clearInterval(check);
+                    initCalendar();
+                }
+            }, 50);
+        }
+
+        Livewire.on('filter-changed', function () {
+            setTimeout(function () {
+                if (window.FullCalendar) initCalendar();
+            }, 100);
         });
     });
     </script>

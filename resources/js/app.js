@@ -1,5 +1,10 @@
 import './bootstrap';
 
+const fullCalendarPromise = import('fullcalendar').then((mod) => {
+    window.FullCalendar = mod;
+    return mod;
+});
+
 document.addEventListener('DOMContentLoaded', function () {
     initDarkMode();
     initFullCalendar();
@@ -26,47 +31,6 @@ function initDarkMode() {
 function initFullCalendar() {
     const calendarEl = document.getElementById('calendar');
     if (!calendarEl) return;
-
-    import('fullcalendar').then(({ Calendar }) => {
-        const calendar = new Calendar(calendarEl, {
-            initialView: calendarEl.dataset.view || 'dayGridMonth',
-            headerToolbar: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay'
-            },
-            themeSystem: 'standard',
-            buttonText: {
-                today: 'Hoy',
-                month: 'Mes',
-                week: 'Semana',
-                day: 'Día'
-            },
-            locale: 'es',
-            height: 'auto',
-            slotMinTime: '08:00:00',
-            slotMaxTime: '20:00:00',
-            slotDuration: '00:30:00',
-            businessHours: {
-                daysOfWeek: [1, 2, 3, 4, 5, 6],
-                startTime: '09:00',
-                endTime: '19:00',
-            },
-            events: JSON.parse(calendarEl.dataset.events || '[]'),
-            eventClick: function (info) {
-                if (window.Livewire) {
-                    Livewire.dispatch('viewAppointment', { id: info.event.id });
-                }
-            },
-            dateClick: function (info) {
-                if (window.Livewire) {
-                    Livewire.dispatch('dateSelected', { date: info.dateStr });
-                }
-            }
-        });
-        calendar.render();
-        window.barbershopCalendar = calendar;
-    });
 }
 
 function initCharts() {
