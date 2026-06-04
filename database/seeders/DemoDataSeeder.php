@@ -22,33 +22,37 @@ class DemoDataSeeder extends Seeder
         $admin = User::where('role', 'admin')->first();
         $barbers = \App\Models\Barber::with('user')->get();
         $services = Service::all();
-        $existingCustomerIds = Customer::pluck('id')->toArray();
 
-        // 1. More customers (40 additional)
+        // Clear demo data for fresh seed (order matters for FK constraints)
+        \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        \App\Models\DateOverride::truncate();
+        LoyaltyPoint::truncate();
+        Gallery::truncate();
+        Expense::truncate();
+        Review::truncate();
+        Payment::truncate();
+        Income::truncate();
+        Appointment::truncate();
+        \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=1');
+
+        // 1. Ensure at least 80 customers
         $customers = Customer::all();
-        if ($customers->count() < 60) {
-            $newCount = 60 - $customers->count();
+        if ($customers->count() < 80) {
+            $newCount = 80 - $customers->count();
             Customer::factory($newCount)->create();
             $customers = Customer::all();
         }
 
-        // 2. Generate 300 appointments across 3 months back and 3 months forward
+        // 2. Generate 500 appointments across 3 months back and 4 months forward
         $statuses = ['completed', 'completed', 'completed', 'completed', 'confirmed', 'confirmed', 'pending', 'cancelled', 'no_show'];
-        $existingAppointmentCount = Appointment::count();
-        $neededAppointments = 300 - $existingAppointmentCount;
 
-        if ($neededAppointments > 0) {
-            $newAppointments = [];
-            $newPayments = [];
-            $newReviews = [];
-
-            for ($i = 0; $i < $neededAppointments; $i++) {
+        for ($i = 0; $i < 500; $i++) {
                 $barber = $barbers->random();
                 $service = $services->random();
                 $customer = $customers->random();
                 $status = $statuses[array_rand($statuses)];
 
-                $dayOffset = rand(-90, 60);
+                $dayOffset = rand(-90, 120);
                 $startHour = rand(9, 17);
                 $startMinute = [0, 15, 30, 45][array_rand([0, 15, 30, 45])];
 
@@ -135,10 +139,11 @@ class DemoDataSeeder extends Seeder
                         ]),
                     ]);
                 }
-            }
         }
 
-        // 3. Expenses (40 records for past 3 months)
+        $this->command->info('500 appointments created!');
+
+        // 3. Expenses (80 records for past 3 months)
         $expenseDescriptions = [
             'Aluguel do salão' => 'rent',
             'Conta de luz' => 'utilities',
@@ -167,8 +172,8 @@ class DemoDataSeeder extends Seeder
         ];
 
         $existingExpenses = Expense::count();
-        if ($existingExpenses < 40) {
-            $needed = 40 - $existingExpenses;
+        if ($existingExpenses < 80) {
+            $needed = 80 - $existingExpenses;
             $descriptions = array_keys($expenseDescriptions);
             for ($i = 0; $i < $needed; $i++) {
                 $desc = $descriptions[array_rand($descriptions)];
