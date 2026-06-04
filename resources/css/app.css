@@ -166,6 +166,20 @@ h1, h2, h3, h4, h5, h6 {
     @apply bg-gray-500 dark:bg-gray-500;
 }
 
+/* Dark mode global overrides for better text contrast */
+.dark .text-gray-500 {
+    color: #a1a1aa;
+}
+
+.dark .step-circle-inactive {
+    color: #a1a1aa;
+}
+
+/* Fix hover direction in dark mode */
+.dark .hover\:text-gray-600:hover {
+    color: #d4d4d8;
+}
+
 /* Animation keyframes */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }

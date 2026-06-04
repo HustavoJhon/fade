@@ -11,7 +11,7 @@
     @livewireStyles
     <title>@yield('title', 'FADE Panel') - FADE</title>
 </head>
-<body class="bg-[#f5f5f5] dark:bg-secondary antialiased">
+<body class="bg-[#f5f5f5] dark:bg-secondary text-zinc-800 dark:text-zinc-200 antialiased">
     <div x-data="{ sidebarOpen: true, mobileOpen: false }" class="min-h-screen flex">
         {{-- Sidebar --}}
         <aside

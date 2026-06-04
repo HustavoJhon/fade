@@ -1,7 +1,7 @@
 <div x-data="{ open: false }">
     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
         <div>
-            <h1 class="text-3xl font-heading font-bold">Servicios</h1>
+            <h1 class="text-3xl font-heading font-bold dark:text-white">Servicios</h1>
             <p class="text-gray-500 dark:text-gray-400 mt-1">Gestiona los servicios ofrecidos.</p>
         </div>
         <button wire:click="create" x-on:click="open = true" class="btn-primary text-sm !py-2.5 flex items-center gap-2">

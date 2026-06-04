@@ -1,7 +1,7 @@
 <div>
     <div class="flex items-center justify-between mb-8">
         <div>
-            <h1 class="text-3xl font-heading font-bold">Configuración</h1>
+            <h1 class="text-3xl font-heading font-bold dark:text-white">Configuración</h1>
             <p class="text-gray-500 dark:text-gray-400 mt-1">Administra la configuración del negocio.</p>
         </div>
     </div>

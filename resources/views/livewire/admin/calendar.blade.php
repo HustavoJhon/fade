@@ -1,7 +1,7 @@
 <div>
     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
         <div>
-            <h1 class="text-3xl font-heading font-bold">Calendario</h1>
+            <h1 class="text-3xl font-heading font-bold dark:text-white">Calendario</h1>
             <p class="text-gray-500 dark:text-gray-400 mt-1">Visualiza y gestiona las citas en el calendario.</p>
         </div>
     </div>

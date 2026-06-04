@@ -1,7 +1,7 @@
 <div x-data="{ tab: 'incomes' }">
     <div class="flex items-center justify-between mb-8">
         <div>
-            <h1 class="text-3xl font-heading font-bold">Finanzas</h1>
+            <h1 class="text-3xl font-heading font-bold dark:text-white">Finanzas</h1>
             <p class="text-gray-500 dark:text-gray-400 mt-1">Control de ingresos y egresos.</p>
         </div>
         <div class="flex gap-2">

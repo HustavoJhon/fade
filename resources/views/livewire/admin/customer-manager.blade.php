@@ -2,7 +2,7 @@
     {{-- Header --}}
     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6">
         <div>
-            <h1 class="text-2xl font-heading font-bold">Usuarios</h1>
+            <h1 class="text-2xl font-heading font-bold dark:text-white">Usuarios</h1>
             <p class="text-sm text-gray-500 mt-1">Gestión de usuarios del sistema.</p>
         </div>
         <div class="flex items-center gap-3 mt-4 sm:mt-0">
