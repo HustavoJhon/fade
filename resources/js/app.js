@@ -75,8 +75,8 @@ function initCharts() {
 
     if (!revenueChartEl && !servicesChartEl) return;
 
-    import('chart.js').then(({ Chart, CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Title, Tooltip, Legend, Filler }) => {
-        Chart.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Title, Tooltip, Legend, Filler);
+    import('chart.js').then(({ Chart, CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Title, Tooltip, Legend, Filler, LineController, DoughnutController }) => {
+        Chart.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Title, Tooltip, Legend, Filler, LineController, DoughnutController);
 
         if (revenueChartEl) {
             const ctx = revenueChartEl.getContext('2d');
