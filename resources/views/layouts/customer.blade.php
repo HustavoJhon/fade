@@ -33,16 +33,16 @@
                             <svg x-cloak x-show="document.documentElement.classList.contains('dark')" class="w-[18px] h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/></svg>
                         </button>
                         <div x-data="{ open: false }" class="relative">
-                            <button @click="open = !open" class="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-lg hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors">
+                            <button @click="open = !open" class="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-lg hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors text-zinc-700 dark:text-zinc-200">
                                 <div class="w-7 h-7 rounded-lg gold-gradient flex items-center justify-center text-white text-xs font-semibold">
                                     {{ substr(auth()->user()->name ?? 'A', 0, 1) }}
                                 </div>
                                 <span class="hidden sm:block text-sm font-medium max-w-[100px] truncate">{{ auth()->user()->name ?? 'Cliente' }}</span>
                                 <svg class="w-3.5 h-3.5 text-zinc-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                             </button>
-                            <div x-show="open" @click.away="open = false" x-cloak class="absolute right-0 mt-2 w-52 bg-white dark:bg-secondary rounded-xl shadow-xl border border-zinc-200 dark:border-white/10 overflow-hidden z-50">
-                                <a href="{{ route('customer.profile') }}" class="flex items-center gap-3 px-4 py-3 text-sm hover:bg-zinc-50 dark:hover:bg-white/5 transition-colors">Mi Perfil</a>
-                                <a href="{{ route('home') }}" class="flex items-center gap-3 px-4 py-3 text-sm hover:bg-zinc-50 dark:hover:bg-white/5 transition-colors">Volver al sitio</a>
+                            <div x-show="open" @click.away="open = false" x-cloak class="absolute right-0 mt-2 w-52 bg-white dark:bg-zinc-800/95 rounded-xl shadow-xl border border-zinc-200 dark:border-white/10 overflow-hidden z-50">
+                                <a href="{{ route('customer.profile') }}" class="flex items-center gap-3 px-4 py-3 text-sm text-zinc-700 dark:text-zinc-200 hover:bg-zinc-50 dark:hover:bg-white/10 transition-colors">Mi Perfil</a>
+                                <a href="{{ route('home') }}" class="flex items-center gap-3 px-4 py-3 text-sm text-zinc-700 dark:text-zinc-200 hover:bg-zinc-50 dark:hover:bg-white/10 transition-colors">Volver al sitio</a>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit" class="flex items-center gap-3 w-full px-4 py-3 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">Cerrar sesión</button>
