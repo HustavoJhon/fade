@@ -29,7 +29,11 @@
                     </div>
                     <div>
                         <label for="phone" class="block text-sm font-medium mb-2">Teléfono</label>
-                        <input id="phone" type="tel" name="phone" value="{{ old('phone') }}" class="input-field" placeholder="+1 (555) 000-0000">
+                        <div class="flex">
+                            <span class="inline-flex items-center px-4 rounded-l-lg border border-r-0 border-gray-300 dark:border-white/10 bg-gray-100 dark:bg-zinc-800 text-gray-500 dark:text-gray-400 text-sm font-semibold tracking-wide select-none">+51</span>
+                            <input id="phone" type="tel" name="phone" value="{{ old('phone') }}" maxlength="9" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="!rounded-l-none input-field" placeholder="999 999 999" required>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-1">Código +51 Perú · 9 dígitos</p>
                         @error('phone')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror

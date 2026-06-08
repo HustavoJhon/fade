@@ -27,9 +27,10 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Password::defaults()],
-            'phone' => ['nullable', 'string', 'max:20'],
+            'phone' => ['required', 'digits:9', 'unique:users,phone'],
         ]);
 
+        $validated['phone'] = '+51' . $validated['phone'];
         $validated['password'] = Hash::make($validated['password']);
         $validated['role'] = 'customer';
 
@@ -37,7 +38,7 @@ class RegisterController extends Controller
 
         $customer = Customer::create([
             'user_id' => $user->id,
-            'phone' => $validated['phone'] ?? null,
+            'phone' => $validated['phone'],
         ]);
 
         event(new Registered($user));
