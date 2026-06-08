@@ -238,7 +238,7 @@ class DemoDataSeeder extends Seeder
             }
         }
 
-        // 6. Gallery images (placeholder)
+        // 6. Gallery images
         $galleryCount = Gallery::count();
         if ($galleryCount < 8) {
             $needed = 8 - $galleryCount;
@@ -252,10 +252,20 @@ class DemoDataSeeder extends Seeder
                 'Corte infantil',
                 'Finalização com pomada',
             ];
+            $sourceDir = public_path('images');
+            $targetDir = storage_path('app/public/gallery');
+            if (!is_dir($targetDir)) {
+                mkdir($targetDir, 0755, true);
+            }
             for ($i = 0; $i < $needed; $i++) {
+                $source = $sourceDir . '/gallery-' . ($i + 1) . '.jpg';
+                $filename = 'gallery-' . ($i + 1) . '.jpg';
+                if (file_exists($source)) {
+                    copy($source, $targetDir . '/' . $filename);
+                }
                 Gallery::create([
                     'barber_id' => $barbers->random()->id,
-                    'image' => 'gallery/placeholder-' . ($i + 1) . '.jpg',
+                    'image' => 'gallery/' . $filename,
                     'caption' => $captions[$i] ?? 'Estilo FADE',
                     'sort_order' => $i,
                     'is_active' => true,
