@@ -13,7 +13,6 @@ use Carbon\Carbon;
 use OpenSpout\Common\Entity\Row;
 use OpenSpout\Common\Entity\Style\Style;
 use OpenSpout\Writer\XLSX\Writer;
-use Illuminate\Support\Facades\Response;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 
@@ -140,11 +139,11 @@ class Reports extends Component
         $data['type'] = $type;
 
         $pdf = Pdf::loadView('reports.' . $type, $data);
+        $filename = 'reporte-' . $type . '-' . $this->dateFrom . '-al-' . $this->dateTo . '.pdf';
 
-        return Response::make($pdf->output(), 200, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'attachment; filename="reporte-' . $type . '-' . $this->dateFrom . '-al-' . $this->dateTo . '.pdf"',
-        ]);
+        return response()->streamDownload(function () use ($pdf) {
+            echo $pdf->output();
+        }, $filename);
     }
 
     public function generateExcel(string $type)
@@ -234,7 +233,10 @@ class Reports extends Component
 
         $writer->close();
 
-        return Response::download($path, $fileName)->deleteFileAfterSend();
+        return response()->streamDownload(function () use ($path) {
+            echo file_get_contents($path);
+            @unlink($path);
+        }, $fileName);
     }
 
     public function render()
