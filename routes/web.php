@@ -68,7 +68,9 @@ Route::middleware(['auth'])->prefix('customer')->name('customer.')->group(functi
             ->latest()
             ->take(5)
             ->get();
-        return view('customer.dashboard', compact('upcomingAppointments', 'recentAppointments'));
+        $completedCount = \App\Models\Appointment::where('user_id', $user->id)->where('status', 'completed')->count();
+        $totalAppointments = \App\Models\Appointment::where('user_id', $user->id)->count();
+        return view('customer.dashboard', compact('upcomingAppointments', 'recentAppointments', 'completedCount', 'totalAppointments'));
     })->name('dashboard');
     Route::get('/appointments', function () {
         $user = auth()->user();
