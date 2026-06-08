@@ -12,7 +12,24 @@
 
     <section class="py-24 bg-cream dark:bg-secondary">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div x-data="{ barber: 'todos', lightbox: null }">
+            <div x-data="{ 
+                barber: 'todos', 
+                lightbox: null,
+                items: [
+                    { src: '{{ asset('images/gallery-1.jpg') }}', barber: 'alejandro', caption: 'Fade degradado', category: 'cortes' },
+                    { src: '{{ asset('images/gallery-2.jpg') }}', barber: 'carlos', caption: 'Barba perfilada', category: 'barba' },
+                    { src: '{{ asset('images/gallery-3.jpg') }}', barber: 'miguel', caption: 'Corte moderno', category: 'cortes' },
+                    { src: '{{ asset('images/gallery-4.jpg') }}', barber: 'alejandro', caption: 'Diseño fade', category: 'cortes' },
+                    { src: '{{ asset('images/gallery-5.jpg') }}', barber: 'carlos', caption: 'Afeitado clásico', category: 'barba' },
+                    { src: '{{ asset('images/gallery-6.jpg') }}', barber: 'miguel', caption: 'Degradado militar', category: 'cortes' },
+                    { src: '{{ asset('images/gallery-7.jpg') }}', barber: 'alejandro', caption: 'Corte + barba', category: 'combo' },
+                    { src: '{{ asset('images/gallery-8.jpg') }}', barber: 'carlos', caption: 'Estilo texturizado', category: 'cortes' },
+                    { src: '{{ asset('images/gallery-9.jpg') }}', barber: 'miguel', caption: 'Fade medio', category: 'cortes' },
+                    { src: '{{ asset('images/gallery-10.jpg') }}', barber: 'alejandro', caption: 'Barba completa', category: 'barba' },
+                    { src: '{{ asset('images/gallery-11.jpg') }}', barber: 'carlos', caption: 'Corte degradado alto', category: 'cortes' },
+                    { src: '{{ asset('images/gallery-12.jpg') }}', barber: 'miguel', caption: 'Estilo pompadour', category: 'cortes' },
+                ]
+            }">
                 <div class="flex flex-wrap gap-3 mb-12 justify-center">
                     <button @click="barber = 'todos'" :class="barber === 'todos' ? 'bg-primary text-white' : 'bg-white dark:bg-dark-card text-secondary dark:text-cream hover:bg-primary/10'" class="px-6 py-2.5 rounded-full font-medium transition-all shadow-sm">Todos</button>
                     <button @click="barber = 'alejandro'" :class="barber === 'alejandro' ? 'bg-primary text-white' : 'bg-white dark:bg-dark-card text-secondary dark:text-cream hover:bg-primary/10'" class="px-6 py-2.5 rounded-full font-medium transition-all shadow-sm">Alejandro</button>
@@ -20,24 +37,9 @@
                     <button @click="barber = 'miguel'" :class="barber === 'miguel' ? 'bg-primary text-white' : 'bg-white dark:bg-dark-card text-secondary dark:text-cream hover:bg-primary/10'" class="px-6 py-2.5 rounded-full font-medium transition-all shadow-sm">Miguel</button>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-                    <template x-for="(item, index) in [
-                        { src: 'gallery-1.jpg', barber: 'alejandro', caption: 'Fade degradado', category: 'cortes' },
-                        { src: 'gallery-2.jpg', barber: 'carlos', caption: 'Barba perfilada', category: 'barba' },
-                        { src: 'gallery-3.jpg', barber: 'miguel', caption: 'Corte moderno', category: 'cortes' },
-                        { src: 'gallery-4.jpg', barber: 'alejandro', caption: 'Diseño fade', category: 'cortes' },
-                        { src: 'gallery-5.jpg', barber: 'carlos', caption: 'Afeitado clásico', category: 'barba' },
-                        { src: 'gallery-6.jpg', barber: 'miguel', caption: 'Degradado militar', category: 'cortes' },
-                        { src: 'gallery-7.jpg', barber: 'alejandro', caption: 'Corte + barba', category: 'combo' },
-                        { src: 'gallery-8.jpg', barber: 'carlos', caption: 'Estilo texturizado', category: 'cortes' },
-                        { src: 'gallery-9.jpg', barber: 'miguel', caption: 'Fade medio', category: 'cortes' },
-                        { src: 'gallery-10.jpg', barber: 'alejandro', caption: 'Barba completa', category: 'barba' },
-                        { src: 'gallery-11.jpg', barber: 'carlos', caption: 'Corte degradado alto', category: 'cortes' },
-                        { src: 'gallery-12.jpg', barber: 'miguel', caption: 'Estilo pompadour', category: 'cortes' },
-                    ]" :key="index">
+                    <template x-for="(item, index) in items" :key="index">
                         <div x-show="barber === 'todos' || barber === item.barber" x-transition:enter="transition-all duration-300" class="group relative overflow-hidden rounded-xl aspect-square bg-primary/5 cursor-pointer" @click="lightbox = index">
-                            <div class="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                                <svg class="w-16 h-16 text-primary/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                            </div>
+                            <img x-bind:src="item.src" alt="" class="w-full h-full object-cover absolute inset-0 group-hover:scale-110 transition-transform duration-500">
                             <div class="absolute inset-0 bg-gradient-to-t from-secondary/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-5">
                                 <p class="text-cream font-semibold text-sm" x-text="item.caption"></p>
                                 <p class="text-primary text-xs mt-1" x-text="'Por ' + item.barber.charAt(0).toUpperCase() + item.barber.slice(1)"></p>
@@ -54,15 +56,11 @@
                         <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
                     </button>
                     <div class="max-w-3xl w-full bg-dark-card rounded-2xl overflow-hidden shadow-2xl">
-                        <div class="aspect-square bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                            <svg class="w-32 h-32 text-primary/20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        <div class="aspect-square relative bg-dark-card">
+                            <img x-bind:src="lightbox !== null ? items[lightbox].src : ''" alt="" class="w-full h-full object-cover">
                         </div>
                         <div class="p-4 text-center">
-                            <p class="text-cream font-semibold" x-text="lightbox !== null ? [
-                                'Fade degradado', 'Barba perfilada', 'Corte moderno', 'Diseño fade',
-                                'Afeitado clásico', 'Degradado militar', 'Corte + barba', 'Estilo texturizado',
-                                'Fade medio', 'Barba completa', 'Corte degradado alto', 'Estilo pompadour'
-                            ][lightbox] : ''"></p>
+                            <p class="text-cream font-semibold" x-text="lightbox !== null ? items[lightbox].caption : ''"></p>
                         </div>
                     </div>
                     <button @click="lightbox = Math.min(11, lightbox + 1)" x-show="lightbox < 11" class="absolute right-6 text-white/60 hover:text-white transition-colors">
